@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@../../resources/css/startMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+    <children>
+      <ImageView fitHeight="500.0" fitWidth="800.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/Images/r.png" />
+         </image>
+      </ImageView>
+      <HBox alignment="CENTER" layoutX="26.0" layoutY="353.0" prefHeight="100.0" prefWidth="754.0" spacing="10.0">
+         <children>
+            <Button fx:id="serverSttingsButton" mnemonicParsing="false" onAction="#serverSettings" prefHeight="62.0" prefWidth="150.0" styleClass="startOfGameButton" text="Server Settings" />
+            <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGame" prefHeight="62.0" prefWidth="150.0" styleClass="startOfGameButton" text="New Game" />
+            <Button fx:id="loadGameButton" mnemonicParsing="false" onAction="#loadGame" prefHeight="62.0" prefWidth="150.0" styleClass="startOfGameButton" text="Load Game">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="joinGameButton" mnemonicParsing="false" onAction="#joinGame" prefHeight="62.0" prefWidth="150.0" styleClass="startOfGameButton" text="Join Game">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#quit" prefHeight="62.0" prefWidth="150.0" styleClass="startOfGameButton" text="Quit">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <Label layoutX="14.0" layoutY="14.0" text="Server Address:" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="44.0" text="Server  Port:" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="addressLabel" layoutX="171.0" layoutY="14.0" prefHeight="30.0" prefWidth="310.0" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="portLabel" layoutX="171.0" layoutY="44.0" prefHeight="30.0" prefWidth="310.0" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabel" layoutX="1.0" layoutY="220.0" prefHeight="30.0" prefWidth="800.0" textAlignment="CENTER" textFill="#fc0000">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

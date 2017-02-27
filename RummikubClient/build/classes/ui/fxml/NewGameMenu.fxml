@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.2972027972027972, 0.7482517482517482" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="300.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewGameMenuController">
+  <items>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="798.0">
+         <children>
+            <Label layoutX="20.0" layoutY="14.0" text="Game Name:" />
+            <TextField fx:id="gameNameText" layoutX="112.0" layoutY="10.0" prefHeight="25.0" prefWidth="256.0" text="game name here..." />
+            <Label layoutX="28.0" layoutY="50.0" prefHeight="17.0" prefWidth="69.0" text="Your Name:" />
+            <TextField id="playerNameText" fx:id="playerNameText" layoutX="112.0" layoutY="45.0" prefHeight="27.0" prefWidth="256.0" text="your name here..." />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="17.0" prefWidth="798.0">
+         <children>
+            <Label layoutX="27.0" layoutY="15.0" text="Number Of Human Players:" />
+            <RadioButton fx:id="oneHumanPlayer" layoutX="27.0" layoutY="38.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" selected="true" text="1 Player">
+               <toggleGroup>
+                  <ToggleGroup fx:id="humanPlayersNumber" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="twoHumanPlayer" layoutX="138.0" layoutY="38.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="2 Players" toggleGroup="$humanPlayersNumber" />
+            <RadioButton fx:id="threeHumanPlayer" layoutX="259.0" layoutY="38.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="3 Players" toggleGroup="$humanPlayersNumber" />
+            <RadioButton fx:id="fourHumanPlayer" layoutX="382.0" layoutY="38.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="4 Players" toggleGroup="$humanPlayersNumber" />
+            <RadioButton fx:id="threeComputerPlayer" layoutX="382.0" layoutY="86.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="3 Players">
+               <toggleGroup>
+                  <ToggleGroup fx:id="computerPlayersNumber" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="twoComputerPlayer" layoutX="259.0" layoutY="86.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="2 Players" toggleGroup="$computerPlayersNumber" />
+            <RadioButton fx:id="oneComputerPlayer" layoutX="138.0" layoutY="86.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" selected="true" text="1 Player" toggleGroup="$computerPlayersNumber" />
+            <Label layoutX="26.0" layoutY="63.0" text="Number Of Computer Players:" />
+            <RadioButton fx:id="zeroComputerPlayer" layoutX="27.0" layoutY="86.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="0 Players" toggleGroup="$computerPlayersNumber" />
+         </children>
+      </AnchorPane>
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="69.0" prefWidth="473.0">
+         <children>
+            <Button id="startGame" fx:id="startGameButton" disable="true" layoutX="116.0" layoutY="34.0" mnemonicParsing="false" onAction="#startGame" prefHeight="27.0" prefWidth="121.0" text="Start Game" />
+            <Button id="cancel" fx:id="cancelButton" layoutX="243.0" layoutY="35.0" mnemonicParsing="false" onAction="#goBackToMainMenu" text="Back To Main Menu" />
+            <Label fx:id="errorLabel" layoutX="108.0" layoutY="14.0" textFill="RED" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>

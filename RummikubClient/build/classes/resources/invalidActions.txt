@@ -1,0 +1,12 @@
+
+
+###################### Invalid changes !!! ########################
+
+1. If its your first turn, your initial move needs to be of 30 points or more.
+
+2. One or more of the sequences on the board weren’t valid.
+
+You earned 3 Tiles!
+
+###################################################################
+

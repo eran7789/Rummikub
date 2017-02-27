@@ -1,0 +1,10 @@
+.startOfGameButton {
+	-fx-text-fill: #ca0000;
+	-fx-font: 18px "serif";
+	-fx-font-weight: bold;
+        -fx-border: 2px;
+}
+.root {
+    -fx-background: #00008b;
+}
+

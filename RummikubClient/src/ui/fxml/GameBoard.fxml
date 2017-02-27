@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameBoardController">
+   <children>
+      <ImageView fitHeight="604.0" fitWidth="807.0" layoutX="-5.0" layoutY="-2.0">
+         <image>
+            <Image url="@../../resources/Images/r.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="128.0" fitWidth="765.0" layoutX="15.0" layoutY="465.0">
+         <image>
+            <Image url="@../../resources/Images/mediumBrown.jpg" />
+         </image>
+      </ImageView>
+      <HBox fx:id="playersView" layoutX="-6.0" layoutY="-2.0" prefHeight="74.0" prefWidth="701.0" spacing="5.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding></HBox>
+      <Button layoutX="726.0" layoutY="204.0" mnemonicParsing="false" onAction="#sortByGroups" prefHeight="60.0" prefWidth="60.0" text="7 7 7" textFill="#070706" />
+      <Button layoutX="726.0" layoutY="275.0" mnemonicParsing="false" onAction="#sortBySets" prefHeight="60.0" prefWidth="60.0" text="5 6 7" />
+      <MenuButton layoutX="714.0" layoutY="22.0" mnemonicParsing="false" onAction="#boardMenuButton" prefHeight="58.0" prefWidth="72.0" text="Menu">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#ShowInstructions" text="Instructions" />
+          <MenuItem mnemonicParsing="false" onAction="#SaveGame" text="Save Game" />
+            <MenuItem mnemonicParsing="false" onAction="#ExitGame" text="Exit Game" />
+        </items>
+      </MenuButton>
+      <Button layoutX="696.0" layoutY="417.0" mnemonicParsing="false" onAction="#finishTurn" prefHeight="31.0" prefWidth="90.0" text="Finish Turn" textAlignment="CENTER" />
+      <Label fx:id="ErrorLine" layoutX="49.0" layoutY="437.0" prefHeight="17.0" prefWidth="615.0" textFill="#cd0808">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="deckButton" layoutX="726.0" layoutY="346.0" mnemonicParsing="false" onAction="#getATileFromDeck" prefHeight="60.0" prefWidth="60.0" text="Deck" textAlignment="CENTER" />
+      <Button layoutX="726.0" layoutY="133.0" mnemonicParsing="false" onAction="#resetMoves" prefHeight="60.0" prefWidth="60.0" text="reset" textFill="#070706" />
+      <Pane fx:id="boardPane" layoutX="15.0" layoutY="80.0" prefHeight="330.0" prefWidth="678.0">
+         <children>
+            <Label fx:id="waitingLabel" layoutX="149.0" layoutY="27.0" prefHeight="96.0" prefWidth="478.0" text="Waiting For Game To Start..." textFill="#d00909">
+               <font>
+                  <Font name="System Bold" size="33.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <AnchorPane fx:id="playerBoardPane" layoutX="16.0" layoutY="465.0" prefHeight="127.0" prefWidth="763.0" />
+   </children>
+</Pane>

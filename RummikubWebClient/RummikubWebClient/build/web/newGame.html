@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html >
+    <head>
+        <meta charset="UTF-8"> 
+        <title>Rummikub</title>
+        <link rel="stylesheet" type="text/css" href="resources/css/navStyle.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/responsiveStyle.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script> 
+            var humanVal = '1';
+            var computerVal = '1';
+        </script>
+        <link rel="stylesheet" type="text/css" href="resources/css/navStyle.css">
+    </head>
+    <body>
+        <div class="header" id="nav">
+            <ul>
+                <li id="newGame">
+                    <a href="newGame.html">
+                        New Game
+                    </a>
+                </li>
+                <li id="joinGame">
+                    <a href="#">
+                        Join Game
+                    </a>
+                </li>
+                <li id="loadGame">
+                    <a href="#">
+                        Load Game
+                    </a>
+                </li>
+                <li id="serverSettings">
+                    <a href="#">
+                        Server Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div>
+                <h3>Game Name: </h3> <input type="text" title="Game Name" id="gameName">
+            </div>
+            <div>
+                <h3>Your Name: </h3> <input type="text" title="Your Name" id="playerName">
+            </div>
+            <div>
+                <h3>Number of Human Players: </h3>
+            </div>
+            <div id="humanRadioDiv">
+                <input type="radio" name="humanPlayerRadio" value="1" checked> 
+                1 Player
+                <input type="radio" name="humanPlayerRadio" value="2">
+                2 Players
+                <input type="radio" name="humanPlayerRadio" value="3">
+                3 Players
+                <input type="radio" name="humanPlayerRadio" value="4">
+                4 Players
+            </div>
+            <div>
+                <h3>Number of Computer Players: </h3>
+            </div>
+            <div id="computerRadioDiv">
+                <input type="radio" name="computerPlayerRadio" value="0">
+                0 Players
+                <input type="radio" name="computerPlayerRadio" value="1" checked>
+                1 Player
+                <input type="radio" name="computerPlayerRadio" value="2">
+                2 Players
+                <input type="radio" name="computerPlayerRadio" value="3">
+                3 Players
+            </div>
+            <br>
+            <div>
+                <div>
+                    <h5 id="messageLabel"></h5>
+                </div>
+                <input type="button" value="Start Game" id="startGame" onClick="startGame()" disabled>
+                <input type="button" value="Back To Main Menu" id="back" onClick="backToMainMenu()">
+            </div>
+            <script>
+                $("#gameName").change(undefined, function() {
+                    if (this.value === '') 
+                       this.value = 'Game Name Here...';
+                   checkForStartGameButtonEnable();
+                }).change();
+                $("#gameName").click(undefined, function() {
+                    if (this.value === 'Game Name Here...') 
+                       this.value = '';
+                   checkForStartGameButtonEnable();
+                }).change();
+                $("#playerName").change(undefined, function() {
+                    if (this.value === '') 
+                       this.value = 'Your Name Here...';
+                   checkForStartGameButtonEnable();
+                }).change();
+                $("#playerName").click(undefined, function() {
+                    if (this.value === 'Your Name Here...') 
+                       this.value = '';
+                   checkForStartGameButtonEnable();
+                }).change();
+            
+                $("[type=radio][name=humanPlayerRadio]").click(function() {
+                    humanVal = this.value;
+                    checkForStartGameButtonEnable();
+                }).change();
+                
+                $("[type=radio][name=computerPlayerRadio]").click(function () {
+                    computerVal = this.value;
+                    checkForStartGameButtonEnable();
+                }).change();
+                
+                function checkForStartGameButtonEnable() {
+                    var enable = true;
+                    if ($('#gameName').val() === '' || $('#gameName').val() === 'Game Name Here...') {
+                        enable = false;
+                    }
+                    if ($('#playerName').val() === '' || $('#playerName').val() === 'Your Name Here...') {
+                        enable = false;
+                    }
+                    if (humanVal === '1' && computerVal === '0') {
+                        enable = false;
+                    }
+                    if (humanVal === '2' && computerVal === '3') {
+                        enable = false;
+                    }
+                    if (humanVal === '3' && (computerVal === '2' || computerVal === '3')) {
+                        enable = false;
+                    }
+                    if (humanVal === '4' && computerVal !== '0') {
+                        enable = false;
+                    }
+                    
+                    $('#startGame').prop('disabled', !enable);
+                }
+                
+                function startGame() {
+                    var newGameInfo = {gameName: $('#gameName').val(),
+                        playerName: $('#playerName').val(),
+                        numOfComputerPlayers: computerVal,
+                        numOfHumanPlayers: humanVal};
+                    
+                    $.ajax({
+                        url: "/RummikubWebClient/createGame",
+                        data: newGameInfo,
+                        success: succesFunc(),
+                        dataType: "json"
+                    });
+                }
+                
+                function succesFunc(data) {
+                    if (data === "Game Name Already Exists!")
+                        $('#messageLabel').html(data);
+                    else if (data === "Server Failure!")
+                        $('#messageLabel').html(data);
+                    else {
+                        window.location = "game.html";
+                    }
+                }
+            </script>
+        </div>
+    </body>
+</html>

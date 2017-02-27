@@ -1,0 +1,5 @@
+Please choose:
+1. To start a new game
+2. To load a saved game
+3. To see instructions
+4. To leave the program

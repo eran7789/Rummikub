@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="resources/css/navStyle.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/gameStyle.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/responsiveStyle.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script>
+            var gameInfo, playersDetails;
+            var timer = setInterval(getGameInfo, 2000);
+            var eventID = 0;
+            var playerCardsArr;
+            var currentCard;
+            var gameBoardCardsArr;
+            var myName;
+            var currentPlayer;
+            var getGameInfoWorker;
+            var getPlayersInfoWorker;
+            var getMyBoardWorker;
+            
+            function getGameInfo() {
+                getGameInfoWorker = new Worker('resources/js/getGameInfoWorker.js');
+                getGameInfoWorker.onmessage = function(event) {
+                    showGameInfo(event.data);
+                };
+                getGameInfoWorker.postMessage("");
+            }
+            
+            function showGameInfo(data) {
+                if (data.status !== "WAITING") {
+                    getPlayersInfoWorker = new Worker('resources/js/getPlayersInfoWorker.js');
+                    getPlayersInfoWorker.onmessage = function(event) {
+                        clearInterval(timer);
+                        playersDetails = event.data;
+                        showPlayersInfo();
+                        getAndPrintMyBoard();
+                        activateEventPuller();
+                    };
+                    getPlayersInfoWorker.postMessage("");
+                    myName = data.playerName;
+                }
+            }
+            
+            function showPlayersInfo() {
+                $("#players").html("");
+                for (i=0; i<playersDetails.length; i++) {
+                    $("#players").append("<div class=\"playerBox col-2\" id=\"player" + i + "\"></div>");
+                    $("#player" + i).html("<div class=\"inline\"><h6>" + playersDetails[i].name + "</h6>" + 
+                        "<h6>number of tiles: " + playersDetails[i].numberOfTiles + "</h6></div>");
+                    if (playersDetails[i].type === "HUMAN") {
+                        $("#player" + i).append("<div class=\"inline\"><img src=\"resources/images/humanIcon.png\" height=\"40px\"></div>");
+                    }
+                    else {
+                        $("#player" + i).append("<div class=\"inline\"><img src=\"resources/images/computerIcon.png\" height=\"40px\"></div>");
+                    }
+                }
+            }
+            
+            function getAndPrintMyBoard() {
+                getMyBoardWorker = new Worker('resources/js/getMyBoardWorker.js');
+                getMyBoardWorker.onmessage = function(event) {
+                    playerCardsArr = event.data.tiles;
+                    printPlayerBoard(event.data.tiles);
+                };
+                getMyBoardWorker.postMessage("");
+            }
+            
+            function printPlayerBoard(board) {
+                var tile, i;
+                $("#playerBoard").html("");
+                for (i=0; i<board.length; i++) {
+                    $("#playerBoard").append(createPlaceHolderHtml(0, i));
+                    tile = board[i];
+                    $("#playerBoard").append(createPlayerImageHtmlString(tile));
+                }
+                $("#playerBoard").append(createPlaceHolderHtml(0, i));
+            }
+            
+            function createPlayerImageHtmlString(tile) {
+                var tileJsonString = JSON.stringify(tile);
+                var ret = "";
+                if (tile.value !== 0) {
+                    ret += '<img class="playerCard card" src="resources/images/small/tile' 
+                        + tile.value + tile.color.toLowerCase() + '.png" onmouseover="onCardMouseOver(this)" \n\
+                            onmouseout="onCardMouseOut(this)" onclick="cardClick(this)" data-belongs="player"\n\
+                                id="' + tile.value + tile.color + '" data-card=\'' + tileJsonString + '\'\n\
+                                        data-seqIndex="0" data-seqPos="' + i + '">';
+                } else {
+                    ret += '<img class="playerCard card" src="resources/images/small/'
+                        + tile.color.toLowerCase() + 'Joker.png" onmouseover="onCardMouseOver(this)"\n\
+                            onmouseout="onCardMouseOut(this)" onclick="cardClick(this)" data-belongs="player"\n\
+                                id="' + tile.value + tile.color + '" data-card=\'' + tileJsonString + '\'\n\
+                                        data-seqIndex="0" data-seqPos="' + i + '">';
+                }
+                return ret;
+            }
+            
+            function onPlaceHolderOver(holder) {
+                if (currentCard !== undefined) {
+                    holder.style.backgroundColor = 'green';
+                }
+            }
+            
+            function onPlaceHolderOut(holder) {
+                holder.style.backgroundColor = 'transparent';
+            }
+            
+            function onCardMouseOver(card) {
+                if (currentCard === undefined)
+                    card.style.backgroundColor = 'blue';
+            }
+            
+            function onCardMouseOut(card) {
+                if (card.style.backgroundColor !== 'black')
+                    card.style.backgroundColor = 'transparent';
+            }
+            
+            function cardClick(card) {
+                if (currentCard === undefined) {
+                    if (currentPlayer !== undefined) {
+                        if (currentPlayer === myName || card.parentNode !== $("#gameBoard")) {
+                            card.style.backgroundColor = 'black';
+                            currentCard = card;
+                        }
+                    } 
+                } else if (currentCard === card) {
+                    card.style.backgroundColor = 'transparent';
+                    currentCard = undefined;
+                }
+            }
+        </script>
+        <title>Rummikub</title>
+    </head>
+    <body>
+        <div class="header" id="nav">
+            <ul>
+                <li id="newGame">
+                    <a href="newGame.html">
+                        New Game
+                    </a>
+                </li>
+                <li id="joinGame">
+                    <a href="#">
+                        Join Game
+                    </a>
+                </li>
+                <li id="loadGame">
+                    <a href="#">
+                        Load Game
+                    </a>
+                </li>
+                <li id="serverSettings">
+                    <a href="#">
+                        Server Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-12" id="players">
+            
+        </div>
+        <div class="row">
+            <div class="col-10" id="gameBoard">
+                <h1 class="col-12">Waiting For Players To Join The Game</h1>
+            </div>
+            <div class="col-2 gameButtons">
+                <ul>
+                    <li onClick="reset()">Reset</li>
+                    <li onClick="sortByNumber()">777</li>
+                    <li onClick="sortByColor()">567</li>
+                    <li onClick="takeCardFromDeck()">Deck</li>
+                    <li onClick="finishTurn()">Finish Turn</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div class="col-12" id="errorLine">
+            </div>
+        </div>
+        <div>
+            <div class="col-12" id="playerBoard">
+            </div>
+        </div>
+        <script>
+            var gameBoard = [];
+            var gameBoardCopy;
+            var pullTimer;
+            var playerCardsArrCopy;
+            var playerTimer = setInterval(function(){showCurrentPlayer();}, 2000);
+            var pullWorker = new Worker('resources/js/eventPullWebWorker.js');
+            pullWorker.onmessage = function(e) {
+                processEvents(e.data);
+            };
+            
+            function activateEventPuller() {
+                pullTimer = setInterval(function() {
+                    pullWorker.postMessage(eventID);
+                }, 1500);
+            }
+            
+            function processEvents(events) {
+                var i;
+                for (i=0; i<events.length; i++) {
+                    switch (events[i].type) {
+                        
+                        case "GAME_OVER":
+                            GameOver();
+                            break;
+                        case "GAME WINNR":
+                            winner = events[i].playerName;
+                            GameOver();
+                            break;
+                        case "PLAYER_FINISH_TURN":
+                            if (event[i].playerName !== myName) {
+                                getGameInfo();
+                                showCurrentPlayer();
+                            }
+                            break;
+                        case "PLAYER_RESIGNED":
+                            
+                            break;
+                        case "TILE_MOVED":
+                            handleTileMoved(events[i]);
+                            break;
+                        case "TILE_RETURND":
+                            handleTileRetured(events[i]);
+                            break;
+                        case "REVERT":
+                            handleRevert(events[i]);
+                            break;
+                        case "PLAYER_TURN":
+                            currentPlayer = events[i].playerName;
+                            gameBoardCopy = gameBoardClone(gameBoard);
+                            playerCardsArrCopy = playerBoardClone(playerCardsArr);
+                            showCurrentPlayer();
+                            break;
+                        case "GAME_START":
+                            $("#gameBoard").html("<h1>Game Started...</h1>");
+                            printGameBoard();
+                            break;
+                        case "SEQUENCE_CREATED":
+                            sequeneCreatedEventHandler(events[i]);
+                            break;
+                        case "TILE_ADDED":
+                            break;
+                        
+                    }
+                    eventID++;
+                }
+            }
+            
+            function handleRevert(event){ 
+                gameBoard = gameBoardClone(gameBoardCopy); 
+                if (event.playerName === myName) { 
+                    playerCardsArr = playerBoardClone(playerCardsArrCopy); 
+                } 
+                printGameBoard();
+                printPlayerBoard(playerCardsArr);
+            }
+            
+            function GameOver(){
+                $("#gameBoard").html("<h1> GAME OVER !! </h1> </br>" + 
+                                      "<ul id = \"gameOverList\" >   </ul> ");
+                
+                $.get("/RummikubWebClient/getPlayersInfo", function(data){
+                   playersDetails = data;
+                   for( i = 0 ; i < playersDetails.length ; i++){
+                       var name = playersDetails[i].name;
+                       if (name === winner)
+                           $("#gameOverList").append("<li>  \" " + name + "\" WINNER!!!" );
+                       else
+                           $("#gameOverList").append("<li>  \" " + name + " \" ");
+                   }
+                });
+                
+            }
+            
+            function handleTileRetured(event){
+                
+                if (event.playerName !== myName){
+                    var sourceIndex = event.sourceSequenceIndex;
+                    var sourcePos = event.sourceSequencePosition;
+                    
+                    gameBoard[sourceIndex].splice(sourcePos,1);
+                }
+            }
+            
+            function handleTileMoved(event){
+                if (event.playerName !== myName){
+                    var sourceIndex = event.sourceSequenceIndex;
+                    var sourcePos = event.sourceSequencePosition;
+                    var targetIndex = event.targetSequenceIndex;
+                    var targetPos = event.targetSequencePosition;
+                    var tile = gameBoard[sourceIndex][sourcePos];
+                
+                    gameBoard[targetIndex].splice(targetPos,1,tile); // inserting tile
+                    gameBoard[sourceIndex].splice(sourcePos,1); //deleting tile
+                }
+            }
+            
+            function showCurrentPlayer() {
+                var curPlayerIndex;
+                for (i=0; i<playersDetails.length; i++) {
+                    if (playersDetails[i].name === currentPlayer) {
+                        curPlayerIndex = i;
+                        break;
+                    }
+                }
+                $(".playerBox").css("border-color", "black");
+                $("#player" + i).css("border-color", "blue");
+            }
+            
+            function sequeneCreatedEventHandler(event) {
+                gameBoard[gameBoard.length] = event.tiles;
+                printGameBoard();
+            }
+            
+            function printGameBoard() {
+                var i, j;
+                var gameBoardView = $("#gameBoard");
+                gameBoardView.html("");
+                var htmlToAppend = "";
+                if (gameBoard.length === 0 || (gameBoard.length === 1 && gameBoard[0].length === 0)) {
+                    htmlToAppend += '<div class="gameBoardIndex-' + 0 + '">';
+                    htmlToAppend += createPlaceHolderHtml(0, 0);
+                    htmlToAppend += "</div>";
+                }
+                else {
+                    for (i=0; i<gameBoard.length; i++) {
+                        htmlToAppend += '<div class="gameBoardIndex-' + i + '">';
+                        for (j=0; j<gameBoard[i].length; j++) {
+                            htmlToAppend += createPlaceHolderHtml(i, j);
+                            var value = gameBoard[i][j].value;
+                            var color = gameBoard[i][j].color;
+                            htmlToAppend += createGameBoardImageHtml(value, color, i, j);
+                        }
+                        htmlToAppend += createPlaceHolderHtml(i, j);
+                        htmlToAppend += "</div>";
+                    }
+                }
+                gameBoardView.append(htmlToAppend);
+                
+                if (gameBoard.length > 0){
+                    if (gameBoard[0].length > 0) {
+                        htmlToAppend = "";
+                        htmlToAppend += '<div class="gameBoardIndex-' + i + '">';
+                        htmlToAppend += createPlaceHolderHtml(i, 0);
+                        htmlToAppend += "</div>";
+                        $("#gameBoard").append(htmlToAppend);
+                    }
+                }
+                $(".placeHolder").click(function(event){placeHolderClick(this);});
+            }
+            
+            function createGameBoardImageHtml(value, color, i, j) {
+                var ret;
+                var joker = value === 0;
+                if (joker) {
+                    ret = '<img class="boardCard card" src="resources/images/small/' 
+                        + color.toLowerCase() + 'Joker.png" onmouseover="onCardMouseOver(this)" \n\
+                            onmouseout="onCardMouseOut(this)" onclick="cardClick(this)" data-belongs="board"\n\
+                                id="' + value + color + '" data-card=\'' + JSON.stringify(gameBoard[i][j]) + '\'\n\
+                                    data-seqIndex="' + i + '" data-seqPos="' + j + '">';
+                } else {
+                    ret = '<img class="boardCard card" src="resources/images/small/tile' 
+                        + value + color.toLowerCase() + '.png" onmouseover="onCardMouseOver(this)" \n\
+                            onmouseout="onCardMouseOut(this)" onclick="cardClick(this)" data-belongs="board"\n\
+                                id="' + value + color + '" data-card=\'' + JSON.stringify(gameBoard[i][j]) + '\'\n\
+                                    data-seqIndex="' + i + '" data-seqPos="' + j + '">';
+                }
+                return ret;
+            }
+            
+            function createPlaceHolderHtml(i, j) {
+                return '<div class="placeHolder" data-seqIndex="' 
+                        + i + '" data-seqPos="' + j + '" onmouseover="onPlaceHolderOver(this)"' +
+                        ' onmouseout="onPlaceHolderOut(this)" onclick="placeHolderClick(this)"></div>';
+            }
+            
+            function addTileToGameBoard(tile, targetSeqIndex, targetSeqPos) {
+                var i = 0;
+                if (targetSeqIndex === gameBoard.length) {
+                    gameBoard[targetSeqIndex] = [];
+                    gameBoard[targetSeqIndex][targetSeqPos] = tile;
+                    addToGameBoardView(tile, targetSeqIndex, targetSeqPos);
+                    addLineToGameBoard(targetSeqIndex+1);
+                    
+                } else if (targetSeqPos === gameBoard[targetSeqIndex].length) {
+                    gameBoard[targetSeqIndex][targetSeqPos] = tile;
+                    addToGameBoardView(tile, targetSeqIndex, targetSeqPos);
+                } else {
+                    var nextCard;
+                    var cardToReplace = gameBoard[targetSeqIndex][targetSeqPos];
+                    gameBoard[targetSeqIndex][targetSeqPos] = tile;
+                    addToGameBoardView(tile, targetSeqIndex, targetSeqPos);
+                    for (i=targetSeqPos + 1; i<gameBoard[targetSeqIndex].length; i++) {
+                        nextCard = gameBoard[targetSeqIndex][i];
+                        gameBoard[targetSeqIndex][i] = cardToReplace;
+                        cardToReplace = nextCard;
+                    }
+                    gameBoard[targetSeqIndex][gameBoard[targetSeqIndex].length] = cardToReplace;
+                }
+            }
+            
+            function addLineToGameBoard(index){
+                htmlToAppend = "";
+                htmlToAppend += '<div class="gameBoardIndex-' + index + '">';
+                htmlToAppend += createPlaceHolderHtml(index, 0);
+                htmlToAppend += "</div>";
+                $("#gameBoard").append(htmlToAppend);
+                $(".placeHolder").click(function(event){placeHolderClick(this);});
+            }
+            
+            function addToGameBoardView(tile, index, position) {
+                var htmlToAppend = "";
+                var lineOfCards = $(".gameBoardIndex-" + index).children();
+                htmlToAppend += createPlaceHolderHtml(index, position);
+                htmlToAppend += createGameBoardImageHtml(tile.value, tile.color, index, position);
+                lineOfCards.eq(position*2).before(htmlToAppend);
+                lineOfCards = $(".gameBoardIndex-" + index).children();
+                var length = lineOfCards.length;
+                for (var i=position*2+2; i<length; i++) {
+                    lineOfCards[i].dataset.seqpos = parseInt(i/2);
+                }
+            }
+            
+            function addTileToPlayerBoard(tile, targetSeqIndex, targetSeqPos) {
+                var i = 0;
+                if (targetSeqPos === playerCardsArr.length) {
+                    playerCardsArr[targetSeqPos] = tile;
+                } else {
+                    playerCardsArr.splice(targetSeqPos, 0, tile);                    
+                }
+                printPlayerBoard(playerCardsArr);
+            }
+            
+            function placeHolderClick(placeHolder) {
+                if (currentCard !== undefined) {
+                    var parent = currentCard.parentNode;
+                    var playerBoardView = $("#playerBoard")[0];
+                    var gameBoardView = $("#gameBoard")[0];
+                    if (parent === gameBoard && myName !== currentPlayer) {
+                        clearCurrentCard();
+                        return;
+                    }
+                    if (placeHolder.parentNode === playerBoardView && parent === gameBoardView && currentCard.dataset.belongs === "board") {
+                        clearCurrentCard();        
+                        return;
+                    }
+                    var targetSeqIndex = placeHolder.dataset.seqindex;
+                    var targetSeqPos = placeHolder.dataset.seqpos;
+                    if (placeHolder.parentNode === playerBoardView) {
+                        addTileToPlayerBoard(JSON.parse(currentCard.dataset.card), parseInt(targetSeqIndex), parseInt(targetSeqPos));
+                        if (parent === gameBoardView) {
+                            $.ajax({
+                                url: "/RummikubWebClient/TakeBackTile",
+                                sequenceIndex: placeHolder.dataset.seqindex,
+                                sequencePos: placeHolder.dataset.seqpos
+                            });
+                        }
+                    }
+                    else {
+                        addTileToGameBoard(JSON.parse(currentCard.dataset.card), parseInt(targetSeqIndex), parseInt(targetSeqPos));
+                        if (parent === playerBoardView) {
+                            if (targetSeqIndex === gameBoard.length) {
+                                $.ajax({
+                                    url: "/RummikubWebClient/CreateSequence"
+                                });
+                            }
+                            $.ajax({
+                                url: "/RummikubWebClient/AddTile",
+                                dataType: "json",
+                                data: {
+                                    tile: currentCard.dataset.card,
+                                    sequenceIndex: placeHolder.dataset.seqindex,
+                                    sequencePos: placeHolder.dataset.seqpos
+                                }
+                            });
+                        } else {
+                            $.ajax({
+                                url: "/RummikubWebClient/AddTile",
+                                dataType: "json",
+                                data: {
+                                    sequenceIndex: currentCard.dataset.seqindex,
+                                    sequencePos: currentCard.dataset.seqpos,
+                                    SourcePos: placeHolder.dataset.seqindex,
+                                    SourceIndex: placeHolder.dataset.seqpos
+                                }
+                            });
+                        }
+                    }
+                    var prev = $(currentCard).prev()[0];
+                    parent.removeChild(prev);
+                    parent.removeChild(currentCard);
+                    if (parent === playerBoardView) {
+                        playerCardsArr.splice(currentCard.dataset.seqpos, 1);
+                    } else {
+                        gameBoard[currentCard.dataset.seqindex].splice(currentCard.dataset.seqpos, 1);
+                    }
+                    clearCurrentCard();
+                    printGameBoard();
+                }
+            }
+            
+            function clearCurrentCard() {
+                currentCard.style.backgroundColor = 'transparent';
+                currentCard = undefined;
+            }
+            
+            function gameBoardClone(board) {
+                var cloned = [];
+                for (i=0; i<board.length; i++) {
+                    cloned[i] = [board[i].length];
+                    for (j=0; j<board[i].length; j++) {
+                        cloned[i][j] = board[i][j];
+                    }
+                }
+                return cloned;
+            }
+            
+            function playerBoardClone(board) {
+                var cloned = [];
+                for (i=0; i<board.length; i++) {
+                    cloned[i] = board[i];
+                }
+                return cloned;
+            }
+            
+            function reset() {
+                if (currentPlayer === myName) {
+                    gameBoard = gameBoardClone(gameBoardCopy);
+                    playerCardsArr = playerBoardClone(playerCardsArrCopy);
+                    printPlayerBoard(playerCardsArr);
+                    printGameBoard();
+                }
+            }
+            
+            function sortByNumber() {
+                playerCardsArr.sort(function(a, b) {
+                    return a.value - b.value;
+                });
+                printPlayerBoard(playerCardsArr);
+            }
+            
+            function sortByColor() {
+                playerCardsArr.sort(function(a, b) {
+                    var aVal = 0, bVal = 0;
+                    if (a.color === "RED")
+                        aVal = 1;
+                    else if (a.color === "YELLOW")
+                        aVal = 2;
+                    else if (a.color === "BLUE") 
+                        aVal = 3;
+                    else if (a.color === "BLACK")
+                        aVal = 4;
+                    if (b.color === "RED")
+                        bVal = 1;
+                    else if (b.color === "YELLOW")
+                        bVal = 2;
+                    else if (b.color === "BLUE") 
+                        bVal = 3;
+                    else if (b.color === "BLACK")
+                        bVal = 4;
+                    return aVal - bVal;
+                });
+                printPlayerBoard(playerCardsArr);
+            }
+            
+            function takeCardFromDeck() {
+                reset();
+                finishTurn();
+            }
+            
+            function finishTurn() {
+                if (myName === currentPlayer) {
+                    $.ajax({
+                        url: "/RummikubWebClient/FinishTurn"
+                    });
+                    if (boardSum(gameBoard) === boardSum(gameBoardCopy)) {
+                        $("#errorLine").html("<h4>No Moves Occured. Got A Tile From Deck!</h4>");
+                        setTimeout(function(){$("#errorLine").html("");}, 2000);
+                        activateEventPuller();
+                    }
+                    getGameInfo();
+                    showCurrentPlayer();
+                }
+            }
+            
+            function boardSum(board) {
+                var sum = 0;
+                for (i=0; i<board.length; i++) {
+                    for (j=0; j<board[i].length; j++) {
+                        sum += board[i][j].value;
+                    }
+                }
+                return sum;
+            }
+        </script>
+    </body>
+</html>

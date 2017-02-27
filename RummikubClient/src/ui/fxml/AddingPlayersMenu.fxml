@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.13879598662207357, 0.39297658862876256" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddingPlayersMenuController">
+  <items>
+      <AnchorPane prefHeight="84.0" prefWidth="798.0">
+         <children>
+            <Label layoutX="365.0" layoutY="14.0" text="Game Name:" />
+            <TextField fx:id="gameNameText" layoutX="272.0" layoutY="42.0" prefHeight="25.0" prefWidth="256.0" text="game name..." />
+         </children>
+      </AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="148.0" prefWidth="798.0">
+         <children>
+            <Label layoutX="14.0" layoutY="48.0" prefHeight="17.0" prefWidth="39.0" text="Name:" />
+            <TextField id="playerNameText" fx:id="playerNameText" layoutX="64.0" layoutY="43.0" onAction="#addPlayer" prefHeight="27.0" prefWidth="306.0" text="new player name..." />
+            <RadioButton id="humanPlayer" fx:id="humanPlayerToggle" layoutX="379.0" layoutY="48.0" mnemonicParsing="false" selected="true" text="Human">
+               <toggleGroup>
+                  <ToggleGroup fx:id="humanOrComputer" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton id="computerPlayer" fx:id="computerPlayerToggle" layoutX="448.0" layoutY="48.0" mnemonicParsing="false" text="Computer" toggleGroup="$humanOrComputer" />
+            <Label id="error" fx:id="error" layoutX="535.0" layoutY="47.0" prefHeight="19.0" prefWidth="245.0" textFill="#e80808">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Button id="add" fx:id="addButton" disable="true" layoutX="380.0" layoutY="88.0" mnemonicParsing="false" onAction="#addPlayer" text="Add" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="394.0" prefWidth="798.0">
+         <children>
+            <Button id="removePlayer" fx:id="removePlayerButton" disable="true" layoutX="426.0" layoutY="221.0" mnemonicParsing="false" onAction="#removePlayer" prefHeight="27.0" prefWidth="135.0" text="Remove Player" />
+            <Button id="startGame" fx:id="startGameButton" disable="true" layoutX="243.0" layoutY="221.0" mnemonicParsing="false" onAction="#startGame" prefHeight="27.0" prefWidth="121.0" text="Start Game" />
+            <Button id="cancel" fx:id="cancelButton" layoutX="667.0" layoutY="386.0" mnemonicParsing="false" onAction="#goBackToMainMenu" text="Back To Main Menu" />
+            <FlowPane fx:id="listOfPlayersPane" alignment="CENTER" hgap="30.0" layoutX="1.0" layoutY="-3.0" prefHeight="223.0" prefWidth="800.0" vgap="10.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding></FlowPane>
+            <Button fx:id="backToMainMenuButton" layoutX="14.0" layoutY="321.0" mnemonicParsing="false" onAction="#goBackToMainMenu" text="Back To Main Menu" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>

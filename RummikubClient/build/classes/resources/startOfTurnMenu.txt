@@ -1,0 +1,6 @@
+
+Your Options:
+1. Take a tile from the deck
+2. Play with the tiles
+3. Save Game
+4. Exit Game

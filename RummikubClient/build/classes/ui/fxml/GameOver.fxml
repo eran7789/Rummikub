@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameOverController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/Images/r.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="32.0" layoutY="404.0" mnemonicParsing="false" onAction="#toMainMenu" prefHeight="67.0" prefWidth="212.0" text="Main Menu">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="262.0" layoutY="14.0" prefHeight="69.0" prefWidth="270.0" text="Game Over" textFill="#8a3636">
+         <font>
+            <Font name="AppleMyungjo Regular" size="51.0" />
+         </font>
+      </Label>
+      <VBox fx:id="playersView" layoutX="269.0" layoutY="91.0" prefHeight="362.0" prefWidth="492.0" spacing="5.0" />
+      <Label fx:id="winnerMsg" layoutX="33.0" layoutY="94.0" prefHeight="69.0" prefWidth="220.0" textFill="#7c2c2c">
+         <font>
+            <Font name="Apple Braille Outline 6 Dot" size="31.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServerSettingsController">
+   <children>
+      <Label layoutX="147.0" layoutY="14.0" text="Server Settings:">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="67.0" text="Adress:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="111.0" text="Port:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="addressTextField" layoutX="101.0" layoutY="68.0" onAction="#confirm" />
+      <TextField fx:id="portTextField" layoutX="101.0" layoutY="112.0" onAction="#confirm" />
+      <Button layoutX="176.0" layoutY="177.0" mnemonicParsing="false" onAction="#confirm" text="Confirm" />
+      <Button layoutX="263.0" layoutY="177.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="59.0" text="Cancel" />
+      <Label fx:id="errorLine" layoutX="147.0" layoutY="144.0" prefHeight="21.0" prefWidth="206.0" text="Can't Connect To The Server!" textAlignment="CENTER" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

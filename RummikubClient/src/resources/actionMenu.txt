@@ -1,0 +1,9 @@
+
+Please enter:
+1. Sort by number
+2. Sort by color
+3. To remove a complete sequence from your board
+4. To add a tile to an existing sequence on the game board
+4. Move a tile on the board of the game
+6. To finish your turn
+7. Regret

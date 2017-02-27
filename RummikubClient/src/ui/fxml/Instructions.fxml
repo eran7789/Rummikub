@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+      <Tab text="Rummikub Game">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rummikub is a tile-based game for two to four players, combining elements of the card game rummy and mahjong. Players take turns putting down tiles from their racks into sets (groups or runs) of at least three. In the Sabra version (the most common and popular), the first player to go out scores a positive score based on the total of the other players' hands, while the losers get negative scores. There are 104 number tiles in the game (valued 1 to 13 in four different colors, but duplicated) and two jokers. An important feature of the game is that players can work with the tiles that have already been played." wrappingWidth="300.0" />
+                  <ImageView fitHeight="205.0" fitWidth="248.0" layoutX="338.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/RummikubGame.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+    <Tab text="Game Pieces">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rummikub's main component is a pool of tiles, consisting of 104 number tiles and two joker tiles. The number tiles range in value from one to thirteen in four colors (black, yellow, blue and red). Each combination of color and number is represented twice. Players each have a rack to store tiles without revealing the face of the tiles to the other players." wrappingWidth="300.0" />
+                  <ImageView fitHeight="240.0" fitWidth="264.0" layoutX="322.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/RummikubTiles.jpg" />
+                     </image>
+                  </ImageView>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Course Of Play">
+         <content>
+            <ScrollPane prefHeight="903.0" prefWidth="600.0">
+               <content>
+                  <Pane prefHeight="1272.0" prefWidth="576.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="376.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/RummikubPlay1.jpeg" />
+                           </image>
+                        </ImageView>
+                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="For a player's first move, he must play a set (or sets in some versions) with a value of at least 30 points. Point values are taken from the face value of each tile played, with the joker (if played) assuming the value of the tile it is being used in place of. A player may not use other players' tiles to make the &quot;initial meld&quot;. If a player cannot make an initial meld, he must pick up a single tile from the pool and add it to his rack. Play then proceeds to the next player." wrappingWidth="330.0" />
+                        <Text layoutX="14.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Once a player has made his initial meld, he can, on each turn, play one or more tiles from his rack, making or adding to groups and/or runs. If the player cannot (or chooses not to) play any tiles, he must pick a tile randomly from the pool and add it to his rack." wrappingWidth="330.0" />
+                        <Text layoutX="14.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sets" />
+                        <Text layoutX="14.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All tiles in play must be arranged in sets of at least three tiles. The two valid set types are called runs and groups:" wrappingWidth="330.0" />
+                        <Text layoutX="14.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Runs" />
+                        <Text layoutX="14.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Composed of three or more, same-colored tiles, in consecutive number order. For example- red 6, 7, 8 and 9. A 1 may not follow a 13." wrappingWidth="330.0" />
+                        <Text layoutX="14.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Groups" />
+                        <Text layoutX="14.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Three or four same-value tiles in distinct colors. For example- red 3, blue 3, black 3 and orange 3." wrappingWidth="330.0" />
+                        <Text layoutX="14.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players may play tiles by amending sets already in play. The only limit to the length of a run is the extremes of the tile values. Groups are limited to four because colors may not repeat within a group. If player has a play in hand it must be played or seven tiles must be drawn." wrappingWidth="330.0" />
+                        <Text layoutX="14.0" layoutY="492.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manipulating existing tiles" />
+                        <Text layoutX="15.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="During a player's turn, sets of tiles that have already been played may be manipulated to allow more tiles to be played. At the end of the turn, all played tiles must be in valid sets." wrappingWidth="330.0" />
+                        <Text layoutX="16.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shifting a run " />
+                        <Text layoutX="14.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players may add the appropriate tile to either end of a run and remove a tile from the other end for use elsewhere. If red 3, 4, and 5 have already been played, a player may add the red 6 to the end and remove the 3 for use elsewhere." wrappingWidth="330.0" />
+                        <Text layoutX="16.0" layoutY="644.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Splitting a run " />
+                        <Text layoutX="16.0" layoutY="660.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players may split long runs and insert the corresponding tiles in the middle. Thus, if blue 6, 7, 8, 9, and 10 are already a run, the player may insert his own 8 to make two runs: 6, 7, 8 and 8, 9, 10." wrappingWidth="330.0" />
+                        <Text layoutX="16.0" layoutY="728.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Substituting in a group " />
+                        <Text layoutX="16.0" layoutY="744.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players may replace any of the tiles in a three-tile group with a tile of the fourth color and the same value. If blue 6, red 6, and orange 6 are already a group, the player may add the black 6 and remove any one of the other three for use elsewhere." wrappingWidth="330.0" />
+                        <Text layoutX="16.0" layoutY="827.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Removing tiles " />
+                        <Text layoutX="14.0" layoutY="844.0" strokeType="OUTSIDE" strokeWidth="0.0" text="So long as the remaining tiles form a valid run, tiles can be removed from the ends of runs. Any one tile may be removed from a four-tile group." wrappingWidth="330.0" />
+                        <Text layoutX="16.0" layoutY="892.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joker substitution " />
+                        <Text layoutX="16.0" layoutY="908.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A player with a tile matching the color and value of a joker may replace the joker with that tile. If the joker is used in a set of three, if a player can split the set so only the joker remains, it may be used as any tile, so long as the player immediately uses it with at least 2 tiles from their rack. The joker must be played that same turn in a set with at least two other tiles from the player's rack. The color and the value of the joker may both change when this happens. Thus, if blue 3, blue 4, joker is an existing run, a player holding a blue 5, a red 7 and an orange 7 may replace the joker with his blue 5 and play the joker with the two sevens as a new group. As an alternative, the joker may be substituted for tiles already played. This will result in a faster paced game. In another more challenging version of Sabra rules:[4] in a group of three (5,5,J),the joker can be replaced only by having BOTH missing colours. Also, a meld that includes a joker may not be manipulated." wrappingWidth="330.0" />
+                        <Text layoutX="16.0" layoutY="1163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harvested tiles " />
+                        <Text layoutX="16.0" layoutY="1179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="In the course of a turn, a tile that is &quot;harvested&quot; from an existing set must be played during the turn; it cannot be kept for later use. Example: if there is a 3,4,5 run on the table, the 3 can be harvested by putting down the appropriately coloured 6, but the 3 must be used during that turn, not kept in the player's hand for later use." wrappingWidth="330.0" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="376.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/RummikubPlay2.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="526.0" fitWidth="208.0" layoutX="362.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/rummikub-manipulation.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </content>
+            </ScrollPane>
+         </content>
+    </Tab>
+      <Tab text="Errors">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="At the end of each turn, all sets on the table must be valid, but during the course of a turn, utterly arbitrary temporary re-arrangements are allowed. These can get very involved, requiring several steps. Sometimes, what had been imagined in the mind to be possible turns out not to be, leaving the table in an illegal state. When this happens (and the choice of when to invoke this rule depends on how formal or &quot;friendly&quot; the game is), the offending player must return all sets on the table to their original state, and pick up three tiles as a penalty." wrappingWidth="300.0" />
+                  <ImageView fitHeight="162.0" fitWidth="246.0" layoutX="340.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/Rummikuberror.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Winnings">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Once a winner has been declared, the losing players must add up the values of the tiles remaining in their racks (their score for the game). The joker has a penalty value of 30. A player's score for the game is subtracted from his current cumulative score. Once calculated, each of the losing players' scores for the game is added to the winners current cumulative score." wrappingWidth="300.0" />
+                  <ImageView fitHeight="163.0" fitWidth="234.0" layoutX="352.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/RummikubGame.jpg" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="14.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="For example- suppose in a game player A wins, player B has a score of 5, player C has a score of 10 and player D a score of 3. Player A will now have a cumulative score of 18, player B will be -5, player C will be -10 and player D will be -3." wrappingWidth="300.0" />
+                  <Text layoutX="14.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Should the game result in no winner, the player with the least number of tiles in their rack is the winner. Scoring is then carried out in the normal manner." wrappingWidth="300.0" />
+                  <Text layoutX="14.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Winning" />
+                  <Text layoutX="14.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game play continues until a player has used all of the tiles in the rack, at which point they should call out &quot;Rummikub&quot;, and are declared the winner. If the pool runs out of tiles, play continues until there is a winner or no player can make a valid play." wrappingWidth="300.0" />
+                  <ImageView fitHeight="174.0" fitWidth="254.0" layoutX="354.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/RummiKids.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Buttons Guide">
+         <content>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1068.0" prefWidth="600.0">
+                     <children>
+                        <Pane prefHeight="1041.0" prefWidth="600.0">
+                           <children>
+                              <ImageView fitHeight="214.0" fitWidth="262.0" layoutX="324.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/restButton.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="214.0" fitWidth="262.0" layoutX="324.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/777Button.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="214.0" fitWidth="262.0" layoutX="324.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/567Button.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="214.0" fitWidth="262.0" layoutX="324.0" layoutY="627.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/deckButton.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="214.0" fitWidth="262.0" layoutX="324.0" layoutY="830.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/images/restButton.png" />
+                                 </image>
+                              </ImageView>
+                              <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset Button" />
+                              <Text layoutX="14.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resets all moves in the current turn. The current player stays the current player but his tile rack and the game board will restart to the start of his turn condition." wrappingWidth="250.0" />
+                              <Text layoutX="14.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="777 Button" />
+                              <Text layoutX="14.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sorts the current player's tiles by number." />
+                              <Text layoutX="14.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="567 Button" />
+                              <Text layoutX="14.0" layoutY="459.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sorts the current player's tiles by color." />
+                              <Text layoutX="14.0" layoutY="640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deck Button" />
+                              <Text layoutX="14.0" layoutY="666.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pressing this button means you have no moves or you would just like to take a card from the deck. The button shows the number of tiles available in the deck. If the deck is over and no moves occured in the last round the game is over." wrappingWidth="250.0" />
+                              <Text layoutX="14.0" layoutY="843.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Finish Turn Button" />
+                              <Text layoutX="14.0" layoutY="870.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pressing this button means you have finished your turn and you are sure your moves are valid. If not you will recieve 3 tiles from the deck and all your moves will be canceled. Pressing this button will do the validation and move to the next player." wrappingWidth="250.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

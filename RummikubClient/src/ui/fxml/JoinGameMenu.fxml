@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.JoinGameMenuController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/images/r.png" />
+         </image>
+      </ImageView>
+      <ScrollPane fx:id="gamesScroll" layoutX="105.0" layoutY="108.0" opacity="0.74" prefHeight="260.0" prefWidth="590.0">
+         <content>
+            <VBox fx:id="waitingScroll" prefHeight="246.0" prefWidth="590.0" />
+         </content>
+      </ScrollPane>
+      <Button layoutX="555.0" layoutY="402.0" mnemonicParsing="false" onAction="#joinGame" prefHeight="58.0" prefWidth="140.0" text="Join Game" />
+      <Button layoutX="392.0" layoutY="402.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="58.0" prefWidth="140.0" text="Main Menu" />
+      <TextField fx:id="playersName" layoutX="192.0" layoutY="45.0" prefHeight="24.0" prefWidth="312.0" />
+      <Label layoutX="128.0" layoutY="45.0" prefHeight="27.0" prefWidth="55.0" text="Name:" textFill="#e80909">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrorLine" layoutX="279.0" layoutY="376.0" prefHeight="17.0" prefWidth="407.0" textFill="#f20707">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title> Join_Game </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="resources/css/navStyle.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/responsiveStyle.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
+    </head>
+    
+    <body>
+        <div class="header" id="nav">
+            <ul>
+                <li id="newGame">
+                    <a href="newGame.html">
+                        New Game
+                    </a>
+                </li>
+                <li id="joinGame">
+                    <a href="#">
+                        Join Game
+                    </a>
+                </li>
+                <li id="loadGame">
+                    <a href="#">
+                        Load Game
+                    </a>
+                </li>
+                <li id="serverSettings">
+                    <a href="#">
+                        Server Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            Name: <input type='text' id="player_name" name="player_name" /><br/>
+            Game: <select name="game_name" id="game_name"></select><br/>
+            <input type="button" value="Join Game" id="joinGame" onClick="joinGame()" disabled>
+        </div>
+        
+        <script>
+            $(document).ready(function() {
+               
+                function print_game_list(games) {
+                    var selector = $("#game_name");
+                    for (i=0 ; i< games.length ; i++) {
+                        selector.append(
+                            '<option value="'+games[i]+'">'+games[i]+'</option>'     
+                        );
+                    }
+                }
+                
+                $.get("/RummikubWebClient/getWaitingGames", function(data){
+                    print_game_list(data);
+                });
+            });
+            
+                $("#player_name").change(undefined, function() {
+                    if (this.value === '') 
+                       this.value = 'player Name Here...';
+                   checkForJoinGameButtonEnable();
+                }).change();
+                
+                $("#player_name").click(undefined, function() {
+                    if (this.value === 'player Name Here...') 
+                       this.value = '';
+                }).change();
+                
+                function checkForJoinGameButtonEnable() {
+                    var enable = true;
+                    if ($('#player_name').val() === '' || $('#player_name').val() === 'Your Name Here...') {
+                        enable = false;
+                    } 
+                    $('#joinGame').prop('disabled', !enable);
+                }
+                
+                function joinGame(){
+                   var GameInfo = {gameName: $('#game_name').val(),
+                        playerName: $('#player_name').val()};
+                    
+                    $.ajax({
+                        url: "/RummikubWebClient/joinGame",
+                        data: GameInfo,
+                        success: succesFunc(),
+                        dataType: "json"
+                    });
+                }
+                
+                function succesFunc(data) {
+                    if (data === "Game does not Exists!" || data === "Server Failure!")
+                        alert(data);
+                    else {
+                        window.location = "game.html";
+                    }
+                }
+
+        </script>
+    </body>
+</html>
